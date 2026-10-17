@@ -89,7 +89,7 @@ class EntryIndex: @unchecked Sendable {
 }
 
 /// Every installed application (like Raycast's root search).
-final class AppIndex: EntryIndex {
+final class AppIndex: EntryIndex, @unchecked Sendable {
     static let searchRoots: [String] = [
         "/Applications",
         "/System/Applications",
@@ -159,7 +159,7 @@ final class AppIndex: EntryIndex {
 }
 
 /// Files and folders inside ~/Downloads (recursive), kept live with FSEvents.
-final class DownloadsIndex: EntryIndex {
+final class DownloadsIndex: EntryIndex, @unchecked Sendable {
     static let maxEntries = 250_000
     let root: URL
     private var watcher: DirectoryWatcher?
