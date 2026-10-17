@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: swift --version
+
+      - name: Test
+        run: swift test
+
+      - name: Build Flare.app
+        run: scripts/build-app.sh
+
+      - name: Package
+        run: ditto -c -k --keepParent build/Flare.app build/Flare.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Flare
+          path: build/Flare.zip
